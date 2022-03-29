@@ -7,11 +7,11 @@ const { verifyToken } = require('../../utils/tokens')
 
 router.post('/', async (req, res) => {
     User.create({
-        email: req.body.email,
+        username: req.body.username,
         password: req.body.password,
     })
         .then(data => {
-            generateToken(data.id, data.email)
+            generateToken(data.id, data.username)
                 .then(token => res.send({
                     message: 'Registered successfully',
                     accessToken: token,

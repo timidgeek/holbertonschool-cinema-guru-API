@@ -3,14 +3,10 @@ const sequelize = require('../config/database');
 const { hashPassword } = require('../utils/password')
 
 const User = sequelize.define('User', {
-    email: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        set(value) { this.setDataValue('email', value.toLowerCase()) },
-        validate: {
-            isEmail: true
-        },
     },
     password: {
         type: DataTypes.STRING,

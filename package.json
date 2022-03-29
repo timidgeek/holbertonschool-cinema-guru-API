@@ -5,6 +5,7 @@
         "start": "nodemon --watch './**' index.js"
     },
     "dependencies": {
+        "@sequelize/core": "^7.0.0-alpha.10",
         "async": "^3.2.3",
         "axios": "^0.26.1",
         "bcrypt": "^5.0.1",

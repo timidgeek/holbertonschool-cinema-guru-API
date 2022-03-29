@@ -3,9 +3,9 @@ const User = require('../models/User');
 require('dotenv').config();
 const { JWT_TOKEN_SECRET, TOKEN_EXPIRE_SECONDS } = process.env
 
-const generateToken = async (userId, email) => {
+const generateToken = async (userId, username) => {
     return new Promise((resolve, reject) => {
-        jwt.sign({ userId, email }, JWT_TOKEN_SECRET, { expiresIn: parseInt(TOKEN_EXPIRE_SECONDS) }, (err, token) => {
+        jwt.sign({ userId, username }, JWT_TOKEN_SECRET, { expiresIn: parseInt(TOKEN_EXPIRE_SECONDS) }, (err, token) => {
             if (err) {
                 reject(new Error('Token generation unsuccessful'))
             }
@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
     jwt.verify(token, JWT_TOKEN_SECRET, (err, decoded) => {
         if (err) return res.sendStatus(403)
         req.userId = decoded.userId
-        req.email = decoded.email
+        req.username = decoded.username
         next()
     })
 }
@@ -35,7 +35,7 @@ const validateToken = (req, res) => {
     if (token === null) return res.sendStatus(401)
     jwt.verify(token, JWT_TOKEN_SECRET, (err, decoded) => {
         if (err) return res.sendStatus(403)
-        const { userId, email } = decoded
+        const { userId, username } = decoded
         User.findById(userId).then(user => {
             res.send(user)
         })
