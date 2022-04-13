@@ -17,11 +17,11 @@ router.post('/', async (req, res) => {
                             }))
                             .catch(err => res.status(500).send(err))
                     } else {
-                        res.status(400).send({ message: 'Incorrect credentials' })
+                        res.status(401).send({ message: 'Incorrect credentials' })
                     }
                 })
         })
-        .catch(() => res.status(400).send({ message: 'Incorrect credentials' }))
+        .catch(() => res.status(401).send({ message: 'Incorrect credentials' }))
 })
 
 module.exports = router

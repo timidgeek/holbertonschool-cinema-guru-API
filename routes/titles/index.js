@@ -1,20 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const { Title } = require('../../models/Title')
-const { UserFavourites } = require('../../models/Title')
-const { UserWatchLater } = require('../../models/Title')
-const axios = require('axios')
-const async = require('async')
 const { verifyToken } = require('../../utils/tokens')
-const delay = ms => new Promise(res => setTimeout(res, ms));
 const { Op } = require('@sequelize/core');
 const userTitlesRouter = require('./userTitles')
 
 router.use('/', userTitlesRouter)
-
-router.get('/', verifyToken, async (req, res) => {
-    Title.findAll().then(titles => res.send(titles)).catch(err => res.status(500).send(err))
-})
 
 router.get('/advancedsearch', verifyToken, async (req, res) => {
     const maxYear = parseInt(req.query.maxYear)
@@ -46,10 +37,10 @@ router.get('/advancedsearch', verifyToken, async (req, res) => {
     res.send({ totalCount: titles.length, titles })
 })
 
-router.get('/:imdbId', verifyToken, (req, res) => {
-    const { imdbId } = req.params
-    Title.findOne({ where: { imdbId } }).then(data => res.send(data)).catch(err => res.status(500).send(err))
-})
+// router.get('/:imdbId', verifyToken, (req, res) => {
+//     const { imdbId } = req.params
+//     Title.findOne({ where: { imdbId } }).then(data => res.send(data)).catch(err => res.status(500).send(err))
+// })
 
 // router.post('/seedDb', async (req, res) => {
 //     let seeded = []
