@@ -38,7 +38,7 @@ const validateToken = (req, res) => {
         const { userId, username } = decoded
         User.findById(userId).then(user => {
             res.send(user)
-        })
+        }).catch(err => res.status(500).send(err))
     })
     return decodedD
 }

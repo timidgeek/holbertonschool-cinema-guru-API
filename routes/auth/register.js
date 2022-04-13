@@ -1,9 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../../models/User')
-const { hashPassword } = require('../../utils/password')
 const { generateToken } = require('../../utils/tokens')
-const { verifyToken } = require('../../utils/tokens')
 
 router.post('/', async (req, res) => {
     User.create({
@@ -16,9 +14,9 @@ router.post('/', async (req, res) => {
                     message: 'Registered successfully',
                     accessToken: token,
                 }))
-                .catch(err => res.send(err))
+                .catch(err => res.status(500).send(err))
         })
-        .catch(err => res.send(err))
+        .catch(() => res.status(400).send({ message: 'Invalid username' }))
 })
 
 module.exports = router

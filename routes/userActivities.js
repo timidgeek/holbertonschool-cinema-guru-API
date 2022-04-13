@@ -14,7 +14,7 @@ router.get('/', verifyToken, (req, res) => {
             model: Title, as: "title", attributes: ["title"]
         }],
         order: [["createdAt", "DESC"]]
-    }).then(data => res.send(data))
+    }).then(data => res.send(data)).catch(err => res.status(500).send(err))
 })
 
 module.exports = router

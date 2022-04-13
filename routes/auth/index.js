@@ -8,10 +8,16 @@ router.use('/register', registerRouter)
 router.use('/login', loginRouter)
 
 router.post('/', verifyToken, (req, res) => {
-    res.send({
-        userId: req.userId,
-        username: req.username,
-    })
+    if (req.userId && req.username) {
+        res.send({
+            userId: req.userId,
+            username: req.username,
+        })
+    } else {
+        res.status(401).send({
+            message: "Invalid token"
+        })
+    }
 })
 
 module.exports = router
