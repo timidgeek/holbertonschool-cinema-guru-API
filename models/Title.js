@@ -15,9 +15,6 @@ const Title = sequelize.define('Title', {
     synopsis: {
         type: DataTypes.TEXT,
     },
-    summary: {
-        type: DataTypes.TEXT,
-    },
     imageurls: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         defaultValue: []
@@ -31,23 +28,7 @@ const Title = sequelize.define('Title', {
         defaultValue: -1
     },
     type: {
-        type: DataTypes.ENUM(["movie", "show"])
-    },
-    runtime: {
-        type: DataTypes.INTEGER,
-        defaultValue: -1
-    },
-    trailerUrl: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: []
-    },
-    reviews: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: []
-    },
-    quotes: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: []
+        type: DataTypes.STRING
     },
     genres: {
         type: DataTypes.ARRAY(DataTypes.STRING),

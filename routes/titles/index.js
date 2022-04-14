@@ -4,6 +4,7 @@ const { Title } = require('../../models/Title')
 const { verifyToken } = require('../../utils/tokens')
 const { Op } = require('@sequelize/core');
 const userTitlesRouter = require('./userTitles')
+const axios = require('axios')
 
 router.use('/', userTitlesRouter)
 
@@ -37,91 +38,47 @@ router.get('/advancedsearch', verifyToken, async (req, res) => {
     res.send({ totalCount: titles.length, titles })
 })
 
-// router.get('/:imdbId', verifyToken, (req, res) => {
-//     const { imdbId } = req.params
-//     Title.findOne({ where: { imdbId } }).then(data => res.send(data)).catch(err => res.status(500).send(err))
-// })
+router.get('/:imdbId', verifyToken, (req, res) => {
+    const { imdbId } = req.params
+    Title.findOne({ where: { imdbId } }).then(data => res.send(data)).catch(err => res.status(500).send(err))
+})
 
 // router.post('/seedDb', async (req, res) => {
 //     let seeded = []
-//     const start = 0
-//     const promises = Array.from({ length: 20 }, (_, i) => i + start + 1).map((page) => seedPage(page, seeded, start))
-//     try {
-//         await Promise.all(promises)
-//         console.log(seeded);
-//     } catch (error) {
-//         console.log(error);
+//     const start = 207
+//     const pages = Array.from({ length: 60 }, (_, i) => i + start)
+//     const delay = ms => new Promise(res => setTimeout(res, ms));
+//     for (let i = 0; i < pages.length; i++) {
+//         console.log(`Seeding page ${pages[i]}`);
+//         const options = {
+//             method: 'GET',
+//             url: 'https://ott-details.p.rapidapi.com/advancedsearch',
+//             params: { page: pages[i] },
+//             headers: {
+//                 'X-RapidAPI-Host': 'ott-details.p.rapidapi.com',
+//                 'X-RapidAPI-Key': 'f7f773b1d0msh32b4bca0bbaffefp1eecc0jsn4b8bf0257608'
+//             }
+//         }
+//         const { data } = await axios.request(options)
+//         for (let j = 0; j < data.results.length; j++) {
+//             const title = data.results[j];
+//             const newTitle = await Title.create({
+//                 title: title.title,
+//                 imdbId: title.imdbid,
+//                 synopsis: title.synopsis,
+//                 imageurls: title.imageurl,
+//                 imdbrating: title.imdbrating ?? -1,
+//                 released: title.released,
+//                 type: title.type,
+//                 genres: title.genre
+//             })
+//             console.log(`Added title ${newTitle.title}`);
+//             seeded.push(newTitle.toJSON())
+//         }
+//         await delay(1000);
 //     }
 //     res.send(seeded)
 // })
-
-// const seedPage = async (page, seeded, start) => {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(async () => {
-//             console.log(`Seeding page: ${page}`);
-//             const options = {
-//                 method: 'GET',
-//                 url: 'https://ott-details.p.rapidapi.com/advancedsearch',
-//                 params: { page },
-//                 headers: {
-//                     'X-RapidAPI-Host': 'ott-details.p.rapidapi.com',
-//                     'X-RapidAPI-Key': '8be507723fmshcbfa5a376ac7643p12124bjsn8e26f6167d9b'
-//                 }
-//             }
-//             try {
-//                 const response = await axios.request(options)
-//                 seeded = await seedTitles(seeded, response, page)
-//                 console.log(`Page ${page} successfully seeded.`);
-//                 resolve(seeded)
-//             } catch (error) {
-//                 reject(error)
-//             }
-//         }, (page - start) * 20000)
-//     })
-// }
-
-// const seedTitles = async (seeded, response, page) => {
-//     return new Promise((resolve, reject) => {
-//         const initalLength = seeded.length
-//         async.eachSeries(response.data.results, async title => {
-//             const options = {
-//                 method: 'GET',
-//                 url: 'https://ott-details.p.rapidapi.com/getadditionalDetails',
-//                 params: { imdbid: title.imdbid },
-//                 headers: {
-//                     'X-RapidAPI-Host': 'ott-details.p.rapidapi.com',
-//                     'X-RapidAPI-Key': '8be507723fmshcbfa5a376ac7643p12124bjsn8e26f6167d9b'
-//                 }
-//             }
-//             await delay(page * 2000);
-//             try {
-//                 const response = await axios.request(options)
-//                 const { data } = response
-//                 const newTitle = await Title.create({
-//                     title: title.title,
-//                     imdbId: title.imdbid,
-//                     synopsis: title.synopsis,
-//                     summary: data.plotSummary,
-//                     imageurls: title.imageurl,
-//                     imdbrating: title.imdbrating ?? -1,
-//                     released: title.released,
-//                     type: title.type,
-//                     trailerUrl: data.trailerUrl,
-//                     reviews: data.reviews,
-//                     quotes: data.quotes,
-//                     genres: title.genre
-//                 })
-//                 seeded.push(newTitle.toJSON())
-//             } catch (error) {
-//                 reject(error)
-//             }
-//         }, () => {
-//             console.log("callback", seeded.length, initalLength)
-//             if (seeded.length !== initalLength + 50) reject(seeded)
-//             else resolve(seeded)
-//         })
-//     })
-// }
 
 const getSort = (param) => {
     switch (param) {
