@@ -6,6 +6,7 @@ const authRouter = require('./routes/auth')
 const titlesRouter = require('./routes/titles')
 const usersRouter = require('./routes/users')
 const userActivitiesRouter = require('./routes/userActivities')
+const fs = require("fs");
 require('dotenv').config()
 
 const app = express();
@@ -22,10 +23,14 @@ app.use('/api/titles', titlesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/activity', userActivitiesRouter);
 
-sequelize.sync({ force: false })
+sequelize.sync({ force: true })
     .then(async () => {
         console.log(`Database & tables created!`);
         console.log('Postgress Connected');
+        fs.readFile("dump.sql", 'utf8', async (err, data) => {
+            await sequelize.query(data)
+            console.log("DB Seeded");
+        })
     })
     .catch(err => console.log(err));
 
