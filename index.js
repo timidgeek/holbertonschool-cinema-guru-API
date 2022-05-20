@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const authRouter = require('./routes/auth')
 const titlesRouter = require('./routes/titles')
-const usersRouter = require('./routes/users')
 const userActivitiesRouter = require('./routes/userActivities')
 const fs = require("fs");
 require('dotenv').config()
@@ -20,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRouter);
 app.use('/api/titles', titlesRouter);
-app.use('/api/users', usersRouter);
 app.use('/api/activity', userActivitiesRouter);
 
 sequelize.sync({ force: true })

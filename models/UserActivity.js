@@ -5,7 +5,7 @@ const User = require("./User")
 
 const UserActivity = sequelize.define('UserActivity', {
     activityType: {
-        type: DataTypes.ENUM(["favourite", "watchLater", "removeFavourited", "removeWatchLater"])
+        type: DataTypes.ENUM(["favorite", "watchLater", "removeFavorited", "removeWatchLater"])
     }
 });
 

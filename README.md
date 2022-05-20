@@ -322,7 +322,7 @@ Content-Length: xy
 
 **Request:**
 ```json
-POST api/titles/favourite HTTP/1.1
+POST api/titles/favorite HTTP/1.1
 Authorization: "Bearer <accessToken>"
 Accept: application/json
 Content-Type: application/json
@@ -438,7 +438,7 @@ Content-Length: xy
     ...
 }
 ``` 
-## Remove movie from favourites
+## Remove movie from favorites
 **You send:**  The movie IMDB Id.
 **You get:** List of all favorited movies.
 
@@ -581,7 +581,7 @@ Content-Length: xy
 [
     {
         "TitleId": 2
-        "activityType": "favourite"
+        "activityType": "favorite"
         "createdAt": "2022-04-13T15:53:26.751Z"
         "id": 77
         "title": {title: "GodHead: In a fiction, in a dream of passion"}

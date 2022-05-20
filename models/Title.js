@@ -36,13 +36,13 @@ const Title = sequelize.define('Title', {
     }
 });
 
-const UserFavourites = sequelize.define('UserFavourites', {}, {});
+const UserFavorites = sequelize.define('UserFavorites', {}, {});
 const UserWatchLater = sequelize.define('UserWatchLater', {}, {});
 
-User.belongsToMany(Title, { as: 'favourite', through: "UserFavourites" })
+User.belongsToMany(Title, { as: 'favorite', through: "UserFavorites" })
 User.belongsToMany(Title, { as: 'watchLater', through: "UserWatchLater" })
-Title.belongsToMany(User, { as: 'favourite', through: "UserFavourites" })
+Title.belongsToMany(User, { as: 'favorite', through: "UserFavorites" })
 Title.belongsToMany(User, { as: 'watchLater', through: "UserWatchLater" })
 
 
-module.exports = { Title, UserFavourites, UserWatchLater };
+module.exports = { Title, UserFavorites, UserWatchLater };

@@ -1,6 +1,9 @@
 FROM node:17
 WORKDIR /app
-COPY ["package.json", "package-lock.json*", "./"]
-RUN npm install
+COPY ["package.json", "./"]
+RUN yarn install
 COPY . .
-CMD ["npm", "start"]
+ENV PORT=8000
+ENV JWT_TOKEN_SECRET=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTY0MDg3MTk2NCwiZXhwIjoxNjQwODc1NTY0fQ.X2KO-pDj3itxifz14dcY1jDMNGGc0KoIQlBE7I2DkbA
+ENV TOKEN_EXPIRE_SECONDS=86400
+CMD ["yarn", "start"]

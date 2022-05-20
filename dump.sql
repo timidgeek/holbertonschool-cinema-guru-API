@@ -9371,7 +9371,7 @@ INSERT INTO public."Titles" (title,"imdbId",synopsis,imageurls,imdbrating,releas
 	 ('Grandpa Chester and the Clarkfield kids','tt15792256',NULL,'{}',-1.0,2022,'tvSeries','{"Animation"}','2022-04-14 11:38:45.632+01','2022-04-14 11:38:45.632+01'),
 	 ('Feria: The Darkest Light','tt13323004',NULL,'{}',5.7,2022,'tvSeries','{"Crime","Drama","Fantasy"}','2022-04-14 11:38:45.635+01','2022-04-14 11:38:45.635+01'),
 	 ('Spy x Family','tt13706018',NULL,'{}',-1.0,2022,'tvSeries','{"Action","Animation","Comedy"}','2022-04-14 11:38:45.64+01','2022-04-14 11:38:45.64+01'),
-	 ('God''s Favourite Idiot','tt13861620',NULL,'{}',-1.0,2022,'tvSeries','{"Comedy"}','2022-04-14 11:38:45.643+01','2022-04-14 11:38:45.643+01'),
+	 ('God''s Favorite Idiot','tt13861620',NULL,'{}',-1.0,2022,'tvSeries','{"Comedy"}','2022-04-14 11:38:45.643+01','2022-04-14 11:38:45.643+01'),
 	 ('Inside the Black Box','tt14617790',NULL,'{}',-1.0,2022,'tvSeries','{"Documentary"}','2022-04-14 11:38:45.647+01','2022-04-14 11:38:45.647+01'),
 	 ('Opportunity Knock$','tt14959024',NULL,'{}',-1.0,2022,'tvSeries','{"Reality-TV"}','2022-04-14 11:38:45.652+01','2022-04-14 11:38:45.652+01');
 INSERT INTO public."Titles" (title,"imdbId",synopsis,imageurls,imdbrating,released,"type",genres,"createdAt","updatedAt") VALUES

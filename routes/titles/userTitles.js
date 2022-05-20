@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const { Title, UserFavourites, UserWatchLater } = require('../../models/Title')
+const { Title, UserFavorites, UserWatchLater } = require('../../models/Title')
 const User = require('../../models/User')
 const UserActivity = require('../../models/UserActivity')
 const { verifyToken } = require('../../utils/tokens')
 
 router.get('/favorite/', verifyToken, (req, res) => {
-    User.findOne({ where: { id: req.userId }, include: { model: Title, as: "favourite" } }).then(user => {
-        res.send(user.favourite)
+    User.findOne({ where: { id: req.userId }, include: { model: Title, as: "favorite" } }).then(user => {
+        res.send(user.favorite)
     }).catch(err => res.status(500).send(err))
 })
 
@@ -19,15 +19,15 @@ router.get('/watchLater/', verifyToken, (req, res) => {
 
 router.post('/favorite/:imdbId', verifyToken, (req, res) => {
     const { imdbId } = req.params
-    User.findOne({ where: { id: req.userId }, include: { model: Title, as: "favourite" } }).then(user => {
+    User.findOne({ where: { id: req.userId }, include: { model: Title, as: "favorite" } }).then(user => {
         Title.findOne({ where: { imdbId } }).then(async title => {
-            await user.addFavourite(title, { as: "favourite" })
+            await user.addFavorite(title, { as: "favorite" })
             await UserActivity.create({
                 userId: user.id,
                 TitleId: title.id,
-                activityType: "favourite"
+                activityType: "favorite"
             })
-            res.send(user.favourite)
+            res.send(user.favorite)
         }).catch(err => res.status(500).send(err))
     }).catch(err => res.status(500).send(err))
 })
@@ -54,11 +54,11 @@ router.delete('/favorite/:imdbId', verifyToken, async (req, res) => {
     try {
         const title = await Title.findOne({ where: { imdbId } })
         const user = await User.findOne({ where: { id: req.userId } })
-        await (await UserFavourites.findOne({ where: { UserId: req.userId, TitleId: title.id } })).destroy()
+        await (await UserFavorites.findOne({ where: { UserId: req.userId, TitleId: title.id } })).destroy()
         const userActivity = await UserActivity.create({
             userId: user.id,
             TitleId: title.id,
-            activityType: "removeFavourited"
+            activityType: "removeFavorited"
         })
         res.send(userActivity)
     } catch (error) { res.status(500).send(error) }
